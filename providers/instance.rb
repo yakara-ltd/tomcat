@@ -185,9 +185,10 @@ action :configure do
         :tomcat_auth => new_resource.tomcat_auth,
         :config_dir => new_resource.config_dir,
       })
-    owner 'root'
+    owner new_resource.user
     group new_resource.group
-    mode '0640'
+    mode '0600'
+
     notifies :restart, "service[#{instance}]"
   end
 
