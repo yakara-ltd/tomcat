@@ -14,3 +14,4 @@ export CATALINA_PID='<%= node["tomcat"]["log_dir"] %>/catalina.pid'
 <% unless node['tomcat']['custom_environment'].empty? %># Custom Environmental variables
 
 <% node['tomcat']['custom_environment'].each_pair do |x,y| %><%= "#{x}=#{y}" %><% end %>
+<% end %>
