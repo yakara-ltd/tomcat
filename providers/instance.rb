@@ -41,7 +41,9 @@ action :configure do
     # Create the directories, since the OS package wouldn't have
     [:base, :config_dir, :context_dir].each do |attr|
       directory new_resource.instance_variable_get("@#{attr}") do
-        mode '0755'
+        user new_resource.user
+        group new_resource.group
+        mode '0775'
         recursive true
       end
     end
@@ -184,16 +186,16 @@ action :configure do
         :tomcat_auth => new_resource.tomcat_auth,
         :config_dir => new_resource.config_dir,
       })
-    owner 'root'
-    group 'root'
-    mode '0644'
+    owner new_resource.user
+    group new_resource.group
+    mode '0600'
     notifies :restart, "service[#{instance}]"
   end
 
   template "#{new_resource.config_dir}/logging.properties" do
     source 'logging.properties.erb'
-    owner 'root'
-    group 'root'
+    owner new_resource.user
+    group new_resource.group
     mode '0644'
     notifies :restart, "service[#{instance}]"
   end
@@ -204,11 +206,17 @@ action :configure do
       command <<-EOH
         #{node['tomcat']['keytool']} \
          -genkey \
+         -keyalg "#{node['tomcat']['key_algorithm']}" \
+         -keysize "#{node['tomcat']['key_size']}" \
+         -sigalg "#{node['tomcat']['key_signature_algorithm']}" \
          -keystore "#{new_resource.config_dir}/#{new_resource.keystore_file}" \
          -storepass "#{node['tomcat']['keystore_password']}" \
          -keypass "#{node['tomcat']['keystore_password']}" \
+         -alias "#{node['tomcat']['certificate_alias']}" \
          -dname "#{node['tomcat']['certificate_dn']}"
       EOH
+      user new_resource.user
+      group new_resource.group
       umask 0007
       creates "#{new_resource.config_dir}/#{new_resource.keystore_file}"
       action :run

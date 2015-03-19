@@ -106,12 +106,15 @@
              <% if @ssl_proxy_port -%>
                proxyPort="<%= @ssl_proxy_port %>"
              <% end -%>
+               sslProtocol="<%= node['tomcat']['ssl_protocol'] %>"
+               sslEnabledProtocols="<%= node['tomcat']['ssl_enabled_protocols'].join(',') %>"
+               ciphers="<%= node['tomcat']['ssl_ciphers'].join(',') %>"
                keystoreFile="<%= @config_dir %>/<%= @keystore_file %>"
                keystorePass="<%= node['tomcat']['keystore_password'] %>"
                keystoreType="<%= @keystore_type %>"
                truststorePass="<%= node['tomcat']['keystore_password'] %>"
                maxThreads="<%= @ssl_max_threads %>" scheme="https" secure="true"
-               clientAuth="false" sslProtocol="TLS" />
+               clientAuth="false" />
   <% end -%>
 
   <% if @ajp_port -%>
