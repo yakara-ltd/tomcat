@@ -69,6 +69,8 @@ attribute :loglevel,
 attribute :tomcat_auth,
   :kind_of => String,
   :equal_to => ['true', 'false']
+attribute :custom_environment,
+  :kind_of => Hash
 
 attribute :user,
   :kind_of => String
