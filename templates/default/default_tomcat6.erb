@@ -70,5 +70,5 @@ CATALINA_OPTS="<%= @catalina_options %>"
 JAVA_ENDORSED_DIRS="<%= @endorsed_dir %>"
 <% unless @custom_environment.empty? %># Custom Environmental variables
 
-<% @custom_environment.each_pair do |x,y| %><%= "#{x}=#{y}" %><% end %>
+<% @custom_environment.each_pair do |x,y| %><%= "export #{x}=#{y}" %><% end %>
 <% end %>
