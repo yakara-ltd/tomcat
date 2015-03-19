@@ -8,7 +8,7 @@ action :configure do
    :max_threads, :ssl_max_threads, :ssl_cert_file, :ssl_key_file,
    :ssl_chain_files, :keystore_file, :keystore_type, :truststore_file,
    :truststore_type, :certificate_dn, :loglevel, :tomcat_auth, :user,
-   :group, :tmp_dir, :lib_dir, :endorsed_dir].each do |attr|
+   :group, :tmp_dir, :lib_dir, :endorsed_dir, :custom_environment].each do |attr|
     if not new_resource.instance_variable_get("@#{attr}")
       new_resource.instance_variable_set("@#{attr}", node['tomcat'][attr])
     end
@@ -133,8 +133,8 @@ action :configure do
         :endorsed_dir => new_resource.endorsed_dir
       })
       owner 'root'
-      group 'root'
-      mode '0644'
+      group new_resource.group
+      mode '0640'
       notifies :restart, "service[#{instance}]"
     end
   when 'smartos'
@@ -142,8 +142,8 @@ action :configure do
     template "#{new_resource.base}/bin/setenv.sh" do
       source 'setenv.sh.erb'
       owner 'root'
-      group 'root'
-      mode '0644'
+      group new_resource.group
+      mode '0640'
       notifies :restart, "service[#{instance}]"
     end
   else
@@ -159,11 +159,12 @@ action :configure do
         :tmp_dir => new_resource.tmp_dir,
         :authbind => new_resource.authbind,
         :catalina_options => new_resource.catalina_options,
-        :endorsed_dir => new_resource.endorsed_dir
+        :endorsed_dir => new_resource.endorsed_dir,
+        :custom_environment => new_resource.custom_environment,
       })
       owner 'root'
-      group 'root'
-      mode '0644'
+      group new_resource.group
+      mode '0640'
       notifies :restart, "service[#{instance}]"
     end
   end
@@ -185,8 +186,8 @@ action :configure do
         :config_dir => new_resource.config_dir,
       })
     owner 'root'
-    group 'root'
-    mode '0644'
+    group new_resource.group
+    mode '0640'
     notifies :restart, "service[#{instance}]"
   end
 

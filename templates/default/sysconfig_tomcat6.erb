@@ -58,8 +58,11 @@ CATALINA_OPTS="<%= @catalina_options %>"
 
 # Endorse .jar files in this directory
 JAVA_ENDORSED_DIRS="<%= @endorsed_dir %>"
+<% unless @custom_environment.empty? %># Custom Environmental variables
 
+<% @custom_environment.each_pair do |x,y| %><%= "#{x}=#{y}" %><% end %>
+
+<% end %>
 # If you wish to further customize your tomcat environment,
 # put your own definitions here
 # (i.e. LD_LIBRARY_PATH for some jdbc drivers)
-
