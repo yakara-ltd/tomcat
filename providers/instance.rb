@@ -130,7 +130,8 @@ action :configure do
         :use_security_manager => new_resource.use_security_manager,
         :tmp_dir => new_resource.tmp_dir,
         :catalina_options => new_resource.catalina_options,
-        :endorsed_dir => new_resource.endorsed_dir
+        :endorsed_dir => new_resource.endorsed_dir,
+        :custom_environment => new_resource.custom_environment,
       })
       owner 'root'
       group new_resource.group
