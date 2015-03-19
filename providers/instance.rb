@@ -125,6 +125,7 @@ action :configure do
     template "/etc/sysconfig/#{instance}" do
       source 'sysconfig_tomcat6.erb'
       variables ({
+        :instance => instance,
         :user => new_resource.user,
         :home => new_resource.home,
         :base => new_resource.base,
@@ -138,6 +139,12 @@ action :configure do
       group new_resource.group
       mode '0640'
       notifies :restart, "service[#{instance}]"
+    end
+    file "/var/run/#{instance}.pid" do
+      owner new_resource.user
+      group new_resource.group
+      mode '0644'
+      action :create_if_missing
     end
   when 'smartos'
     # SmartOS doesn't support multiple instances
