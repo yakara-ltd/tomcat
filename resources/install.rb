@@ -20,8 +20,8 @@
 property :instance_name, String, name_property: true
 property :version, String, default: '8.0.47'
 property :install_path, String, default: lazy { |r| "/opt/tomcat_#{r.instance_name}_#{r.version.tr('.', '_')}/" }
-property :tarball_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/', desired_state: false
-property :checksum_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/', desired_state: false
+property :tarball_base_uri, String, default: 'https://archive.apache.org/dist/tomcat/', desired_state: false
+property :checksum_base_uri, String, default: 'https://archive.apache.org/dist/tomcat/', desired_state: false
 property :checksum_type, String, default: ''
 property :verify_checksum, [true, false], default: true, desired_state: false
 property :dir_mode, String, default: '0750'

@@ -35,8 +35,8 @@ tomcat_install installs an instance of the tomcat binary direct from Apache's mi
 
 - `version`: The version to install. Default: 8.0.47
 - `install_path`: Full path to the install directory. Default: /opt/tomcat_INSTANCENAME_VERSION
-- `tarball_base_uri`: The base uri to the apache mirror containing the tarballs. Default: '<http://archive.apache.org/dist/tomcat/>'
-- `checksum_base_uri`: The base uri to the apache mirror containing the md5 file. Default: '<http://archive.apache.org/dist/tomcat/>'
+- `tarball_base_uri`: The base uri to the apache mirror containing the tarballs. Default: '<https://archive.apache.org/dist/tomcat/>'
+- `checksum_base_uri`: The base uri to the apache mirror containing the md5 file. Default: '<https://archive.apache.org/dist/tomcat/>'
 - `verify_checksum`: Whether the checksum should be verified against `checksum_base_uri`. Default: `true`.
 - `dir_mode`: Directory permissions of the `install_path`. Default: `'0750'`.
 - `tarball_uri`: The complete uri to the tarball. If specified would override (`tarball_base_uri` and `checksum_base_uri`). checksum will be loaded from "#{tarball_uri}.md5". This attribute is useful, if you are hosting tomcat tarballs from artifact repositories such as nexus.
