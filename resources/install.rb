@@ -130,7 +130,7 @@ action_class do
   # we have to do this since the md5 chef expects isn't hosted
   def fetch_checksum
     if new_resource.checksum_type.empty?
-      ctypes = [ 'sha256', 'sha1', 'md5' ]
+      ctypes = [ 'sha512', 'sha256', 'sha1', 'md5' ]
     else
       ctypes = [ new_resource.checksum_type ]
     end
@@ -174,8 +174,10 @@ action_class do
                Digest::SHA1.hexdigest(::File.read(file_to_check))
              when 'sha256' then
                Digest::SHA256.hexdigest(::File.read(file_to_check))
+             when 'sha512' then
+               Digest::SHA512.hexdigest(::File.read(file_to_check))
              else
-               Chef::Log.fatal("Invalid checksum type '#{new_resource.checksum_type}' expecting sha256, sha1, or md5")
+               Chef::Log.fatal("Invalid checksum type '#{new_resource.checksum_type}' expecting sha512, sha256, sha1, or md5")
                raise
              end
 
